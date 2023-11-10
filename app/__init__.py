@@ -13,7 +13,12 @@ login.login_view = 'login'
 
 from app import routes, models
 
-
-# source /Home/filmmeister/venv/bin/activate
-# flask run
+# source /Home/filmmeister/venv/bin/activate  || source /home/pi/development/filmmeisterRick/venv/bin/activate
+#flask run --host=0.0.0.0 --debug
 #alt shift insert
+
+#---- requirements file maken ----#
+# pip freeze > requirements.txt
+
+#---- requirements file installeren ----#
+# pip install -r requirements.txt

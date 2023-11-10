@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Find movie</h1>
+<form id="search_movie" action="" method="post" novalidate>
+    {{ search_movie.hidden_tag() }}
+    <p>
+        {{ search_movie.search.label }}<br>
+        {{ search_movie.search(size=32) }}<br>
+        {% for error in search_movie.search.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p> 
+    <p>{{ search_movie.submit() }}</p>
+</form>
+    {% if search %}
+    <table border =1 align="left">
+        <tr>
+            <th align="left">Id</th>
+            <th align="left">Titel</th>
+            <th align="left">Jaar</th>
+            <th align="left">✔</th>
+          </tr>
+            {% for result in search %}
+                <tr>
+                    <td>{{ result.movieID }}</td>
+                    <td>{{ result['title'] }}</td>
+                    <td>{{ result['year'] }}</td>
+                    <td>
+                        <a href='/film/{{ result.movieID }}/{{ result['title'] }}/{{ result['year'] }}'>Open</a>
+                </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+{% endblock %}

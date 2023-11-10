@@ -1,17 +1,17 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app_inst, db
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, FilmFinder, FilmDetails
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User
 from werkzeug.urls import url_parse
-
+from imdb import Cinemagoer
 
 @app_inst.route('/')
 @app_inst.route('/index')
 @login_required
 def index():
     title = 'Hauptseite'
-    body = 'Berend, Joris, Jan, Rick'
+    body = 'Rick, Berend, Joris, Jan'
     return render_template('index.html', title=title, body=body)
 
 
@@ -52,3 +52,33 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+@app_inst.route('/film/<id>/<title>/<year>', methods=['GET'])
+def openMovies(id,title,year):
+    movie = Cinemagoer().get_movie(id)
+    movieList = {}
+    #movieList['imdbID'] = movie['imdbI']
+    movieList['imdbID'] = id
+    movieList['title'] = title
+    movieList['year'] = year
+    movieList['genres'] = movie['genres']
+    movieList['runtime'] = movie['runtimes'][0]
+    genre_amount = len(movie['genres'])
+    if(genre_amount == 1):
+        movieList['weight'] = "1"
+    else:
+        movieList['weight'] =f"1/{genre_amount}"
+    movieList['rating'] = movie['rating']
+    # print(movie.infoset2keys)
+    return render_template('filmdetails.html', movie=movieList)
+
+@app_inst.route('/filmfinder', methods=['GET', 'POST'])
+def filmfinder():
+    search_movie = FilmFinder()
+    get_movie_details = FilmDetails()
+    ia = Cinemagoer()   
+    if search_movie.submit.data:
+        search = search_movie.search.data
+        search_result = ia.search_movie(search)
+        return render_template('filmfinder.html', title='find movie', search_movie=search_movie, get_movie_details=get_movie_details, search=search_result)
+    return render_template('filmfinder.html', title='find movie', search_movie=search_movie, get_movie_details=get_movie_details)

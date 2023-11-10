@@ -10,7 +10,6 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember me')
     submit = SubmitField('Sign in')
 
-
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -28,3 +27,11 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('Please use a different email address.')
+
+class FilmFinder(FlaskForm):
+    search = StringField('movie name', validators=[DataRequired()])
+    submit = SubmitField('search')
+
+class FilmDetails(FlaskForm):
+    movie_id = SubmitField('+')
+    movie_code = StringField('movie_code')

@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<table border =0 align="left">
+    <tr>
+        <th align="left">Meister</th>
+        <th align="left">TT_Code</th>
+        <th align="left">Film</th>
+        <th align="left">Jaar2</th>
+        <th align="left">Genres</th>
+        <th align="left">Tijdsduur in min</th>
+        <th align="left">Al gezien?</th>
+        <th align="left">Weging</th>
+        <th align="left">Tags</th>
+        <th align="left">Score</th>
+      </tr>
+            <tr>
+                <td>tba</td> <!-- Meister, trek naam van login -->
+                <td>tt{{ movie['imdbID'] }}</td>
+                <td>{{ movie['title'] }}</td>
+                <td>{{ movie['year'] }}</td>
+                <td>{{ movie['genres'] }}</td>
+                <td>{{ movie['runtime'] }}</td>
+                <td>tba</td> <!-- al gezien?, dropdown maken? hoe kopieert dat? -->
+                <td>{{ movie['weight'] }}</td> 
+                <td>tba</td> <!-- tags, voor nu even overslaan... -->
+                <td>{{ movie['rating'] }}</td>
+            </tr>
+    </table>
+    
+{% endblock %}
